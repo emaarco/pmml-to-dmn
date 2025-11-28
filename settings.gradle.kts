@@ -1,1 +1,1 @@
-rootProject.name = "pmmltodmn"
+rootProject.name = "pmml-to-dmn"
