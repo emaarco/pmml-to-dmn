@@ -2,7 +2,7 @@
 
 > **AI before the hype cycle.** Converting decision trees into deployable DMN business rules since 2021.
 
-## Why This Exists
+## 🤔 Why This Exists
 
 This tool bridges machine learning with business process automation. It converts **PMML** (Predictive Model Markup
 Language) decision trees into **DMN** (Decision Model and Notation) format, so you can actually *deploy* your ML models
@@ -14,19 +14,19 @@ Built as part of my 2021 master's thesis on integrating AI into BPMN processes:
 
 **🔗 Related Project**: [bpmn-and-ai](https://github.com/emaarco/bpmn-and-ai)
 
-### The Problem
+### 🚫 The Problem
 
 You've trained a beautiful decision tree model. Great! Now what? Most ML models sit in Jupyter notebooks gathering
 digital dust. This tool lets you deploy them where they matter: automating real business decisions in workflow engines.
 
-### The Solution
+### ✅ The Solution
 
 - **Input**: PMML file containing a decision tree model
 - **Output**: DMN decision table ready for deployment on Camunda, Flowable, or any DMN 1.3 compliant engine
 - **Magic**: Converts tree logic into FEEL expressions with smart simplifications (e.g., `score > 10 and score <= 20`
   becomes `]10..20]`)
 
-## More on the topic
+## 🔍 More on the topic
 
 The work in this thesis explored integrating AI decision-making into structured business processes—patterns that share
 conceptual similarities with what's now being marketed
@@ -34,14 +34,14 @@ as ["agentic AI"](https://camunda.com/resources/what-is-agentic-ai/) in the BPMN
 terminology has evolved, the core idea remains relevant: embedding intelligent, automated decision-making capabilities
 within business process engines like Camunda.
 
-## Quick Start
+## 🚀 Quick Start
 
-### Prerequisites
+### 📋 Prerequisites
 
 - Java 21+
 - Gradle 8.11+
 
-### Build & Run
+### 🔨 Build & Run
 
 ```bash
 # Build the project
@@ -53,7 +53,7 @@ within business process engines like Camunda.
 
 The REST API will be available at `http://localhost:8085`
 
-### API Usage
+### 📡 API Usage
 
 ```bash
 POST /api/dmn
@@ -81,20 +81,20 @@ curl -X POST http://localhost:8085/api/dmn \
   > output.dmn
 ```
 
-## How It Works
+## ⚙️ How It Works
 
 1. **Parse PMML**: Extracts decision tree structure, predicates, and leaf outcomes
 2. **Build Decision Table**: Converts tree paths into DMN rule rows
 3. **Simplify Conditions**: Optimizes numerical ranges into FEEL interval notation
 4. **Generate DMN XML**: Creates valid DMN 1.3 XML using pure DOM manipulation
 
-### Smart Simplifications
+### 🧠 Smart Simplifications
 
 - `score >= 10 AND score < 20` → `[10..20)`
 - `category = "A" OR category = "B"` → preserved as separate rules
 - Numeric literals properly formatted for FEEL expressions
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 - **Kotlin** - Because Java ceremonies are so 2015
 - **Spring Boot** - REST API with minimal fuss
