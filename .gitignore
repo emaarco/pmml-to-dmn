@@ -3,5 +3,4 @@ build
 .gradle
 .DS_Store
 .idea
-gradle
 .claude
