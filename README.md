@@ -12,7 +12,7 @@ Built as part of my 2021 master's thesis on integrating AI into BPMN processes:
 
 **📄 Full Thesis**: [Download PDF](<!-- TODO: Add thesis PDF link -->)
 
-**🔗 Related Project**: [bpmn-and-ai](https://github.com/emaarco/bpmn-and-ai) - Multiple AI integration patterns for BPMN
+**🔗 Related Project**: [bpmn-and-ai](https://github.com/emaarco/bpmn-and-ai)
 
 ### The Problem
 
@@ -28,7 +28,11 @@ digital dust. This tool lets you deploy them where they matter: automating real 
 
 ## More on the topic
 
-The work in this thesis explored integrating AI decision-making into structured business processes—patterns that share conceptual similarities with what's now being marketed as ["agentic AI"](https://camunda.com/resources/what-is-agentic-ai/) in the BPMN/workflow automation space. While the terminology has evolved, the core idea remains relevant: embedding intelligent, automated decision-making capabilities within business process engines like Camunda.
+The work in this thesis explored integrating AI decision-making into structured business processes—patterns that share
+conceptual similarities with what's now being marketed
+as ["agentic AI"](https://camunda.com/resources/what-is-agentic-ai/) in the BPMN/workflow automation space. While the
+terminology has evolved, the core idea remains relevant: embedding intelligent, automated decision-making capabilities
+within business process engines like Camunda.
 
 ## Quick Start
 
