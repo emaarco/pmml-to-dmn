@@ -14,12 +14,14 @@ Built as part of my 2021 master's thesis on integrating AI into BPMN processes:
 
 **🔗 Related Project**: [bpmn-and-ai](https://github.com/emaarco/bpmn-and-ai)
 
-### 🚫 The Problem
+## 🚫 The Problem
 
-You've trained a beautiful decision tree model. Great! Now what? Most ML models sit in Jupyter notebooks gathering
-digital dust. This tool lets you deploy them where they matter: automating real business decisions in workflow engines.
+You've trained a beautiful decision tree model. Great! Now what?
+Many ML models sit in tools like [Knime](https://www.knime.com/) gathering digital dust.
+This tool lets you deploy them where they matter:
+automating real business decisions in workflow engines.
 
-### ✅ The Solution
+## ✅ The Solution
 
 - **Input**: PMML file containing a decision tree model
 - **Output**: DMN decision table ready for deployment on Camunda, Flowable, or any DMN 1.3 compliant engine
@@ -28,10 +30,14 @@ digital dust. This tool lets you deploy them where they matter: automating real 
 
 ## 🔍 More on the topic
 
-The work in this thesis explored integrating AI decision-making into structured business processes—patterns that share
+The work in this thesis explored integrating AI decision-making
+into structured business processes—patterns that share
 conceptual similarities with what's now being marketed
-as ["agentic AI"](https://camunda.com/resources/what-is-agentic-ai/) in the BPMN/workflow automation space. While the
-terminology has evolved, the core idea remains relevant: embedding intelligent, automated decision-making capabilities
+as ["agentic AI"](https://camunda.com/resources/what-is-agentic-ai/)
+in the BPMN/workflow automation space.
+
+While the terminology has evolved, the core idea remains relevant:
+embedding intelligent, automated decision-making capabilities
 within business process engines like Camunda.
 
 ## 🚀 Quick Start
@@ -102,5 +108,4 @@ curl -X POST http://localhost:8085/api/dmn \
 
 ---
 
-*Built during countless hours of thesis writing. Procrastination level: creating entire converter tools instead of
-working on the literature review.*
+*Built during countless hours of thesis writing 🎓*
