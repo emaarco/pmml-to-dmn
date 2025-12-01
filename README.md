@@ -1,6 +1,7 @@
 # PMML to DMN Converter
 
-> **AI before the hype cycle.** Converting decision trees into deployable DMN business rules since 2021.
+> **AI before the current hype.**
+> Converting decision trees into deployable DMN business rules.
 
 ## 🤔 Why This Exists
 
