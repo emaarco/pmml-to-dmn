@@ -11,7 +11,7 @@ import java.util.function.Consumer
  */
 class TreePaths(document: Document) {
 
-    val treePaths: TreeMap<Int, List<Node>> = TreeMap();
+    val treePaths: TreeMap<Int, List<Node>> = TreeMap()
 
     init {
         this.buildDecisionTree(document)

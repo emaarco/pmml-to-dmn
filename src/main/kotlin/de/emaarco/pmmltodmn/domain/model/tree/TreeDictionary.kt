@@ -24,11 +24,6 @@ class TreeDictionary(document: Document) {
             ?: throw RuntimeException("Provided decision-tree has no target-attribute")
     }
 
-    fun getAttribute(searchAttribute: String): DataField {
-        return dictionary.find { field -> field.name === searchAttribute }
-            ?: throw RuntimeException("Found no data-field with name '$searchAttribute'")
-    }
-
     /* -------------------------- private helper methods -------------------------- */
 
     private fun fillDictionary(document: Document) {

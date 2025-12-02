@@ -49,7 +49,7 @@ class NumericalCondition(nodes: List<Node>) : DecisionRuleCondition() {
      * Remove conditions that exclude each other / are redundant
      */
     private fun simplifyConditions(conditions: Map<String, List<Double>>): List<Pair<String, Double>> {
-        val requiredConditions: MutableList<Pair<String, Double>> = ArrayList();
+        val requiredConditions: MutableList<Pair<String, Double>> = ArrayList()
         val boundaryConditions = getBoundaryConditions(conditions)
         getLowerLimitOfInterval(boundaryConditions)?.let { requiredConditions.add(it) }
         getUpperLimitOfInterval(boundaryConditions)?.let { requiredConditions.add(it) }
