@@ -1,0 +1,28 @@
+meta {
+  name: Create DMN model
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8085/api/dmnresult.dmn
+  body: multipartForm
+  auth: inherit
+}
+
+headers {
+  Content-Type: multipart/form-data
+}
+
+body:multipart-form {
+  pmml-file: @file()
+  model-id: credit-risk-v1
+  model-name: Credit Risk Model
+  decision-id: assess-risk
+  decision-name: Assess Credit Risk
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

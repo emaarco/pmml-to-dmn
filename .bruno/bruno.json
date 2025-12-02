@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "pmml-to-dmn",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

@@ -11,7 +11,7 @@ into production BPMN/DMN engines.
 
 Built as part of my 2021 master's thesis on integrating AI into BPMN processes:
 
-**📄 Full Thesis**: [Download PDF](<!-- TODO: Add thesis PDF link -->)
+**📄 Full Thesis**: [Download PDF](assets/thesis.pdf)
 
 **🔗 Related Project**: [bpmn-and-ai](https://github.com/emaarco/bpmn-and-ai)
 
