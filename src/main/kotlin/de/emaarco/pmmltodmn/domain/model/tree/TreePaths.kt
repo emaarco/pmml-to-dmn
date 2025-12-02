@@ -7,8 +7,7 @@ import java.util.*
 import java.util.function.Consumer
 
 /**
- * All paths of the decision tree
- * --> from root to leaf
+ * All paths of the decision tree from root to leaf
  */
 class TreePaths(document: Document) {
 

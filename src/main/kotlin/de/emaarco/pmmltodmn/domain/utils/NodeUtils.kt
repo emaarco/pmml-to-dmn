@@ -31,7 +31,7 @@ object NodeUtils {
             }
         }
         if (conditionNode == null) {
-            throw RuntimeException("Fehler!")
+            throw RuntimeException("SimplePredicate condition node not found!")
         }
         return conditionNode
     }

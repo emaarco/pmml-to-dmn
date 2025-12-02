@@ -93,7 +93,7 @@ class NumericalCondition(nodes: List<Node>) : DecisionRuleCondition() {
             "lessOrEqual" -> "<="
             "greaterThan" -> ">"
             "greaterOrEqual" -> ">="
-            else -> throw RuntimeException("Unbekannter Operator: $comparator")
+            else -> throw RuntimeException("Unknown operator: $comparator")
         }
     }
 
