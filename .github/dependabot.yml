@@ -1,22 +1,46 @@
 version: 2
 updates:
-  # Gradle dependencies
+  # Gradle: everything (patch, minor, major) in one weekly PR — CI is the gate.
   - package-ecosystem: "gradle"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "monday"
-    reviewers:
-      - "emaarco"
-    # Group all dependency updates together
-    groups:
-      all-dependencies:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-          - "major"
-    open-pull-requests-limit: 5
     labels:
       - "dependencies"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      gradle-all:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["patch", "minor", "major"]
+      gradle-security:
+        applies-to: security-updates
+        patterns: ["*"]
+
+  # GitHub Actions: everything in one monthly PR (SHA-pinned, mostly mechanical).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    cooldown:
+      default-days: 7
+    groups:
+      github-actions-all:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["patch", "minor", "major"]
+      github-actions-security:
+        applies-to: security-updates
+        patterns: ["*"]

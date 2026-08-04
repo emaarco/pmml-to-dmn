@@ -1,0 +1,30 @@
+"$schema" = "https://conductor.build/schemas/settings.repo.schema.json"
+
+[scripts]
+# Warm the build once after a workspace is created: downloads the Kotlin/JVM + Kotlin/JS
+# toolchains and all dependencies and compiles every module (without running tests).
+setup = "./gradlew assemble"
+
+# The web dev server uses a fixed port and there is one shared Gradle build, so targets
+# are not isolated per workspace.
+run_mode = "nonconcurrent"
+
+# Build everything, lint and run all tests (JVM + JS + Konsist architecture tests).
+[scripts.run.build]
+command = "./gradlew build"
+icon = "hammer"
+
+# Run all tests + ktlint only.
+[scripts.run.test]
+command = "./gradlew check"
+icon = "test-tube"
+
+# Run the CLI against the bundled example and print the generated DMN.
+[scripts.run.cli]
+command = "./gradlew --quiet --console=plain :cli:run --args=\"examples/credit-score.pmml --deterministic\""
+icon = "terminal"
+
+# Serve the web app locally with hot reload.
+[scripts.run.web]
+command = "./gradlew :web:jsBrowserDevelopmentRun --continuous"
+icon = "globe"

@@ -1,6 +1,13 @@
-# Exclude following files & folders
+# Build output
 build
 .gradle
+.kotlin
+
+# Node / Kotlin-JS (yarn.lock in kotlin-js-store IS committed for reproducible builds)
+node_modules
+
+# OS / IDE
 .DS_Store
 .idea
 .claude
+.claude/logs/

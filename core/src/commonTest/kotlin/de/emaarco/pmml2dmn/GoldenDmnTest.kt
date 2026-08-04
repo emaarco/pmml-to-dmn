@@ -1,0 +1,46 @@
+package de.emaarco.pmml2dmn
+
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+/** Full golden-file test: the deterministic converter must reproduce this exact DMN document. */
+class GoldenDmnTest {
+    private val expected: String =
+        """
+        <?xml version="1.0" encoding="UTF-8"?>
+        <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" namespace="http://camunda.org/schema/1.0/dmn" id="credit-risk-v1" name="Credit Risk Model" exporter="pmml-to-dmn">
+          <decision id="assess-risk" name="Assess Credit Risk">
+            <decisionTable id="DecisionTable_1">
+              <input id="Input_2" label="score">
+                <inputExpression id="InputExpression_3" typeRef="integer" expressionLanguage="feel">
+                  <text>score</text>
+                </inputExpression>
+              </input>
+              <output id="Output_4" name="result" typeRef="string" />
+              <rule id="DecisionRule_7">
+                <inputEntry id="UnaryTests_5">
+                  <text>&gt;= 50.0</text>
+                </inputEntry>
+                <outputEntry id="LiteralExpression_6">
+                  <text>"PASS"</text>
+                </outputEntry>
+              </rule>
+              <rule id="DecisionRule_10">
+                <inputEntry id="UnaryTests_8">
+                  <text>&lt; 50.0</text>
+                </inputEntry>
+                <outputEntry id="LiteralExpression_9">
+                  <text>"FAIL"</text>
+                </outputEntry>
+              </rule>
+            </decisionTable>
+          </decision>
+        </definitions>
+        """.trimIndent() + "\n"
+
+    @Test
+    fun `deterministic conversion matches the golden DMN`() {
+        val actual = Pmml2Dmn.deterministicConverter().convert(creditScoreCommand())
+        assertEquals(expected, actual)
+    }
+}

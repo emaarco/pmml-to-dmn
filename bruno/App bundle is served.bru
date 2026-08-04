@@ -1,0 +1,21 @@
+meta {
+  name: App bundle is served
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/pmml2dmn.js
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("serves the compiled Kotlin/JS bundle", function() {
+    expect(res.getStatus()).to.equal(200);
+    const contentType = res.getHeader("content-type") || "";
+    expect(contentType.toLowerCase()).to.contain("javascript");
+  });
+}

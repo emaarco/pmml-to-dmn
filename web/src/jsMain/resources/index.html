@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMML &rarr; DMN Converter</title>
+
+    <!-- dmn-js decision-table + drd viewer (loaded from CDN; the app degrades gracefully if unavailable) -->
+    <link rel="stylesheet" href="https://unpkg.com/dmn-js@17.0.2/dist/assets/dmn-js-shared.css">
+    <link rel="stylesheet" href="https://unpkg.com/dmn-js@17.0.2/dist/assets/dmn-js-drd.css">
+    <link rel="stylesheet" href="https://unpkg.com/dmn-js@17.0.2/dist/assets/dmn-js-decision-table.css">
+    <link rel="stylesheet" href="https://unpkg.com/dmn-js@17.0.2/dist/assets/dmn-font/css/dmn.css">
+    <script src="https://unpkg.com/dmn-js@17.0.2/dist/dmn-viewer.production.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app"></div>
+<script src="pmml2dmn.js"></script>
+</body>
+</html>

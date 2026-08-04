@@ -1,0 +1,22 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+[*.{kt,kts}]
+max_line_length = 140
+ktlint_standard_no-wildcard-imports = enabled
+# Allow slightly denser code where it aids readability of generated-XML builders.
+ktlint_standard_function-signature = disabled
+ktlint_standard_argument-list-wrapping = disabled
+
+[*.{yml,yaml,json}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false

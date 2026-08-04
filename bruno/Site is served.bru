@@ -1,0 +1,23 @@
+meta {
+  name: Site is served
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("serves the HTML app shell", function() {
+    expect(res.getStatus()).to.equal(200);
+    const body = res.getBody();
+    expect(body).to.contain("id=\"app\"");
+    expect(body).to.contain("pmml2dmn.js");
+    expect(body).to.contain("PMML");
+  });
+}
