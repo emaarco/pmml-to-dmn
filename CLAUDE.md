@@ -19,7 +19,7 @@ packages/core/   functional pipeline: parse → map → serialize (pure), plus X
 packages/cli/    CLI (cac) — imperative shell
 apps/web/        Vite browser app — imperative shell (dmn-js + feelin simulation)
 examples/        credit-score.pmml + credit-score.dmn (golden)
-docs/            architecture.md, demo.md, blogpost-outline.md
+docs/            architecture.md
 ```
 
 ## Core layout (`packages/core/src`, functional core)
