@@ -8,13 +8,33 @@ Convert **PMML decision-tree models** into **DMN decision tables** — as a comm
 directly in your browser. The generated DMN is Camunda-compatible and can be opened, edited and
 executed in any DMN engine or visualised and simulated with [dmn-js](https://github.com/bpmn-io/dmn-js).
 
-> **Why this exists.** Machine-learning models are accurate but opaque. A trained decision tree,
-> exported as PMML, can be turned into an **explainable DMN decision table** — human-readable rules
-> you can review, version, simulate and run in a process engine. This project shows how ML and DMN
-> work *together*: ML produces the model, DMN makes the decision explainable.
-
 A modern rewrite of a converter that originally came out of a master's thesis (`assets/thesis.pdf`),
 rebuilt as a clean, tested TypeScript project.
+
+## Classic ML meets DMN
+
+PMML (Predictive Model Markup Language) is the interchange format for **classic, pre-deep-learning
+machine learning** — decision trees, regressions, scorecards. A model learned from data is accurate,
+but it ships as an opaque artifact you can only *run*: hard to read, audit or adjust by hand.
+
+DMN is the opposite — **decision logic that people author and own**: explicit rules you can read,
+version, govern and execute in a process engine. The trade-off is that you have to write those rules
+yourself.
+
+Converting a PMML decision tree into a DMN table bridges the two: the model *learns* the logic, DMN
+makes it *explicit*. It turns the usual "AI vs. rules" framing into **AI → rules** — keep the pattern
+the model found, but as transparent, testable, governable decisions.
+
+|           | Classic ML (PMML)                 | DMN                                    |
+| --------- | --------------------------------- | -------------------------------------- |
+| Origin    | Learned from data                 | Authored by people                     |
+| Strength  | Finds complex patterns, adapts    | Transparent, auditable, easy to change |
+| Weakness  | Opaque, hard to govern            | You must know the rules up front       |
+| Best when | Patterns are unknown, data-driven | Logic must be explainable and owned    |
+
+**Sweet spot:** train the model with ML, then ship and govern it as DMN — and use
+[dmn-js-simulation](https://github.com/emaarco/dmn-js-simulation) to watch exactly how each input
+reaches its output.
 
 ## Install / quickstart
 
@@ -59,10 +79,11 @@ npm run dev -w @pmml-to-dmn/web       # local dev server (http://localhost:5173)
 npm run build -w @pmml-to-dmn/web     # static site → apps/web/dist
 ```
 
-Paste or upload a PMML file and hit **Convert** — the DMN is generated in your browser, rendered
-with dmn-js, and you can **simulate** concrete inputs (evaluated with [feelin](https://github.com/nikku/feelin))
-to see which rule fires. The `pages.yml` workflow publishes the site to GitHub Pages on every push
-to `master`.
+**Upload** a PMML file (drag-and-drop or picker) and it's converted in your browser and rendered
+read-only with dmn-js. **Simulate** concrete inputs with
+[dmn-js-simulation](https://github.com/emaarco/dmn-js-simulation) to see which rule fires, then
+download the DMN. The `pages.yml` workflow publishes the site to GitHub Pages on every push to
+`master`.
 
 ## Example
 
@@ -88,7 +109,7 @@ Output (`examples/credit-score.dmn`) — a DMN rule with a FEEL condition:
 ```
 packages/core/   The conversion core (functional pipeline: parse → map → serialize)
 packages/cli/    Command-line interface (cac)
-apps/web/        Browser app (Vite, dmn-js viewer, feelin simulation)
+apps/web/        Browser app (Vite, read-only dmn-js viewer + dmn-js-simulation)
 examples/        Sample PMML input and the DMN it produces
 docs/            Architecture, demo walkthrough and blog-post outline
 ```
