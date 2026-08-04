@@ -1,146 +1,428 @@
 :root {
-  --bg: #0f172a;
-  --panel: #1e293b;
-  --border: #334155;
-  --text: #e2e8f0;
-  --muted: #94a3b8;
-  --accent: #38bdf8;
-  --good: #34d399;
+  --bg1: #eef1f5;
+  --bg2: #e0e5ec;
+  --panel: #ffffff;
+  --ink: #111827;
+  --muted: #6b7280;
+  --faint: #9aa2ae;
+  --line: #e4e7ec;
+  --line2: #d4d9e1;
+  --accent: #16a34a;
+  --accent-d: #15803d;
+  --accent-weak: rgba(22, 163, 74, 0.1);
+  --error: #dc2626;
+  --shadow: 0 18px 46px rgba(17, 24, 39, 0.1);
+  --shadow-soft: 0 8px 24px rgba(17, 24, 39, 0.07);
+  --sans: "Geist Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Result page (table, skeleton, nav) is driven by the decision-table width;
+     the upload card only holds a dropzone, so it stays narrower. */
+  --panel-w: 900px;
+  --upload-w: 560px;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html,
+body {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--sans);
+  color: var(--ink);
+  background:
+    radial-gradient(70% 45% at 50% 0%, #f5f7f9, transparent 60%),
+    linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+  background-attachment: fixed;
 }
 
-.wrap {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 24px;
+/* App shell: content fills, legal footer pinned at the bottom. */
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.appmain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px 40px;
 }
 
-header h1 {
-  margin: 0 0 4px;
-  font-size: 1.6rem;
+/* Buttons ------------------------------------------------------------------ */
+
+button {
+  font: inherit;
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    transform 0.05s ease;
 }
-header p {
-  margin: 0 0 20px;
-  color: var(--muted);
+button:hover {
+  background: var(--accent-d);
+}
+button:active {
+  transform: translateY(1px);
+}
+button.secondary {
+  background: var(--panel);
+  color: var(--ink);
+  border-color: var(--line2);
+}
+button.secondary:hover {
+  background: #f3f4f6;
+}
+button.link-btn {
+  background: none;
+  border: none;
+  color: var(--accent-d);
+  padding: 0;
+  font-weight: 600;
+}
+button.link-btn:hover {
+  background: none;
+  text-decoration: underline;
 }
 
-.grid {
+/* Brand + stepper ---------------------------------------------------------- */
+
+.brand {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-size: 1.05rem;
+  margin-bottom: 22px;
+}
+.brand .g {
+  color: var(--accent-d);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.step.disabled {
+  cursor: default;
+}
+.step .num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  place-items: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: #fff;
+  border: 1.5px solid var(--line2);
+  color: var(--faint);
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
-@media (max-width: 840px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+.step .lbl {
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.step.disabled .lbl,
+.step.disabled .num {
+  opacity: 0.55;
+}
+.step.done .num {
+  background: var(--accent-weak);
+  border-color: var(--accent);
+  color: var(--accent-d);
+}
+.step.active .num {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.step.active .lbl {
+  color: var(--ink);
+}
+.bar {
+  width: 54px;
+  height: 2px;
+  background: var(--line2);
+  margin: 0 12px;
+  transition: background 0.15s ease;
+}
+.bar.done {
+  background: var(--accent);
+}
+
+/* Stage + pages */
+.wstage {
+  width: 100%;
+  max-width: 1060px;
+  display: flex;
+  justify-content: center;
+}
+.wpage {
+  display: none;
+  width: 100%;
+}
+.wpage.on {
+  display: block;
 }
 
 .panel {
+  width: var(--upload-w);
+  max-width: 100%;
+  margin: 0 auto;
   background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px;
-  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 32px;
 }
-.grid .panel {
-  margin-top: 0;
+.panel.narrow {
+  text-align: center;
 }
-.panel h2 {
-  margin: 0 0 12px;
-  font-size: 1rem;
+.panel h1 {
+  font-size: 1.5rem;
+  margin: 0 0 6px;
+  letter-spacing: -0.02em;
+}
+.lead {
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-textarea,
-pre {
-  width: 100%;
-  min-height: 320px;
-  background: #0b1220;
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 13px;
+  margin: 0 0 22px;
   line-height: 1.5;
 }
-pre {
-  overflow: auto;
-  white-space: pre;
-}
 
-.toolbar {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin: 12px 0;
-  align-items: center;
-}
-
-button {
-  background: var(--accent);
-  color: #041016;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-weight: 600;
-  cursor: pointer;
-}
-button.secondary {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-label {
-  color: var(--muted);
-  font-size: 13px;
+/* Step 1 — upload */
+.dropzone {
+  width: 100%;
+  background: #fafbfc;
+  border: 2px dashed var(--line2);
+  border-radius: 14px;
+  padding: 48px 24px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-weight: 500;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease;
 }
-input[type="text"],
-input[type="number"] {
-  background: #0b1220;
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 8px;
+.dropzone:hover,
+.dropzone.dragging {
+  border-color: var(--accent);
+  background: var(--accent-weak);
+  transform: translateY(-1px);
+}
+.dropzone-icon {
+  color: var(--accent);
+  line-height: 0;
+  margin-bottom: 2px;
+}
+.dropzone-title {
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.dropzone-hint {
+  font-size: 0.9rem;
+}
+.error {
+  color: var(--error);
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+}
+.error:empty {
+  display: none;
+}
+.or {
+  text-align: center;
+  margin-top: 16px;
+  color: var(--faint);
+  font-size: 0.88rem;
 }
 
-.error {
-  color: #fca5a5;
-  margin: 8px 0 0;
-  min-height: 20px;
+/* Step 2 — result / simulate */
+.resultbar {
+  width: var(--panel-w);
+  max-width: 100%;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.resultbar .model-name {
+  font-weight: 700;
+}
+.resultbar .result-meta {
+  color: var(--faint);
+  font-size: 0.85rem;
+}
+.wspacer {
+  flex: 1;
+}
+
+.canvas-wrap {
+  position: relative;
+  width: var(--panel-w);
+  max-width: 100%;
+  margin: 0 auto;
+  min-height: 360px;
 }
 #dmn-canvas {
-  height: 460px;
+  width: 100%;
+  min-height: 360px;
+  padding: 24px 28px;
   background: #fff;
-  border-radius: 8px;
-  margin-top: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+  overflow-x: auto;
 }
-#sim-inputs {
+/* While converting, keep the viewer laid out (so it measures) but unpainted, so
+   its content never shows through the loading skeleton. */
+#dmn-canvas.is-loading {
+  visibility: hidden;
+}
+.wnav {
+  width: var(--panel-w);
+  max-width: 100%;
+  margin: 16px auto 0;
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
+  align-items: center;
+  gap: 8px;
 }
-#sim-result {
-  font-size: 15px;
+
+/* Give the dmn-js simulation controls room to breathe inside the card. */
+#dmn-canvas .dmn-sim-inputs {
+  margin-bottom: 16px;
 }
-#sim-result .out {
-  color: var(--good);
-  font-weight: 700;
+
+/* Loading skeleton --------------------------------------------------------- */
+
+.skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+}
+.skeleton.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.skeleton-caption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.skeleton-table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.skeleton-row {
+  height: 46px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #eceef1 25%, #f5f7f9 37%, #eceef1 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+.skeleton-head {
+  height: 54px;
+  background: linear-gradient(90deg, #e3e6ea 25%, #eef1f4 37%, #e3e6ea 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--line2);
+  border-top-color: var(--accent);
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Legal footer (mirrors the dmn-js-simulation example) --------------------- */
+
+.app-legal {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 46px;
+  padding: 0 20px;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+.app-legal .app-spacer {
+  flex: 1;
+}
+.footer-credit a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.footer-credit a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+.footer-social {
+  display: inline-flex;
+  color: var(--faint);
+  transition: color 0.15s ease;
+}
+.footer-social:hover {
+  color: var(--accent-d);
+}
+.heart {
+  color: #e0575f;
+}
+.footer-social svg {
+  width: 19px;
+  height: 19px;
 }
