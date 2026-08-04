@@ -1,34 +1,38 @@
-name: CI Build
+name: CI
 
 on:
   pull_request:
-    branches:
-      - master
   push:
     branches:
       - master
 
+permissions:
+  contents: read
+
 jobs:
   build:
-    name: Build with Gradle
+    name: Build, lint, typecheck, arch & test
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # Step 2: Setup Gradle
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-
-      # Step 3: Set up JDK 21
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          node-version: 22
+          cache: npm
 
-      # Step 4: Run Gradle build
-      - name: Run Gradle Build
-        run: ./gradlew build
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check (build, lint, typecheck, arch, test)
+        run: npm run check
+
+      - name: Upload web distribution
+        if: success()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: web-distribution
+          path: apps/web/dist

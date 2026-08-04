@@ -1,112 +1,118 @@
-# PMML to DMN Converter
+# PMML → DMN Converter
 
-> **AI before the current hype.**
-> Converting decision trees into deployable DMN business rules.
+[![CI](https://github.com/emaarco/pmml-to-dmn/actions/workflows/ci.yml/badge.svg)](https://github.com/emaarco/pmml-to-dmn/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![TypeScript](https://img.shields.io/badge/TypeScript-Node-3178C6?logo=typescript&logoColor=white)
 
-## 🤔 Why This Exists
+Convert **PMML decision-tree models** into **DMN decision tables** — as a command-line tool or
+directly in your browser. The generated DMN is Camunda-compatible and can be opened, edited and
+executed in any DMN engine or visualised and simulated with [dmn-js](https://github.com/bpmn-io/dmn-js).
 
-This tool bridges machine learning with business process automation. It converts **PMML** (Predictive Model Markup
-Language) decision trees into **DMN** (Decision Model and Notation) format, so you can actually *deploy* your ML models
-into production BPMN/DMN engines.
+> **Why this exists.** Machine-learning models are accurate but opaque. A trained decision tree,
+> exported as PMML, can be turned into an **explainable DMN decision table** — human-readable rules
+> you can review, version, simulate and run in a process engine. This project shows how ML and DMN
+> work *together*: ML produces the model, DMN makes the decision explainable.
 
-Built as part of my 2021 master's thesis on integrating AI into BPMN processes:
+A modern rewrite of a converter that originally came out of a master's thesis (`assets/thesis.pdf`),
+rebuilt as a clean, tested TypeScript project.
 
-**📄 Full Thesis**: [Download PDF](assets/thesis.pdf)
+## Install / quickstart
 
-**🔗 Related Project**: [bpmn-and-ai](https://github.com/emaarco/bpmn-and-ai)
-
-## 🚫 The Problem
-
-You've trained a beautiful decision tree model. Great! Now what?
-Many ML models sit in tools like [Knime](https://www.knime.com/) gathering digital dust.
-This tool lets you deploy them where they matter:
-automating real business decisions in workflow engines.
-
-## ✅ The Solution
-
-- **Input**: PMML file containing a decision tree model
-- **Output**: DMN decision table ready for deployment on Camunda, Flowable, or any DMN 1.3 compliant engine
-- **Magic**: Converts tree logic into FEEL expressions with smart simplifications (e.g., `score > 10 and score <= 20`
-  becomes `]10..20]`)
-
-## 🔍 More on the topic
-
-The work in this thesis explored integrating AI decision-making
-into structured business processes—patterns that share
-conceptual similarities with what's now being marketed
-as ["agentic AI"](https://camunda.com/resources/what-is-agentic-ai/)
-in the BPMN/workflow automation space.
-
-While the terminology has evolved, the core idea remains relevant:
-embedding intelligent, automated decision-making capabilities
-within business process engines like Camunda.
-
-## 🚀 Quick Start
-
-### 📋 Prerequisites
-
-- Java 21+
-- Gradle 8.11+
-
-### 🔨 Build & Run
+Requires **Node.js 20+** (npm ships with Node).
 
 ```bash
-# Build the project
-./gradlew build
+git clone https://github.com/emaarco/pmml-to-dmn.git
+cd pmml-to-dmn
+npm install
 
-# Run the application
-./gradlew bootRun
+# build, lint, typecheck, run the architecture gate and all tests
+npm run check
+
+# convert a PMML file to DMN
+npm run build -w @pmml-to-dmn/cli
+node packages/cli/dist/main.js examples/credit-score.pmml -o out.dmn
 ```
 
-The REST API will be available at `http://localhost:8085`
+## What you get
 
-### 📡 API Usage
+- 🌳 Converts PMML `TreeModel` decision trees into DMN decision tables
+- 🔢 Simplifies numeric splits into FEEL ranges (`>= 50`, `]10..20]`)
+- 🔤 Handles categorical and continuous inputs and a single target
+- ♻️ Deterministic output — clean diffs, reviews and golden tests
+- 🖥️ **CLI** for scripting and CI
+- 🌐 **Browser app** that converts *and simulates* DMN entirely client-side (hostable on GitHub Pages)
+- 🧩 Small functional core with an enforced architecture (dependency-cruiser)
+
+### Command line
 
 ```bash
-POST /api/dmn
-Content-Type: multipart/form-data
-
-Parameters:
-- pmml-file: Your PMML file (multipart file upload)
-- model-id: Unique identifier for the DMN model
-- model-name: Human-readable model name
-- decision-id: Unique identifier for the decision
-- decision-name: Human-readable decision name
-
-Response: DMN XML file
+node packages/cli/dist/main.js --help
 ```
 
-**Example with curl:**
+Flags: `--model-id`, `--model-name`, `--decision-id`, `--decision-name`, `-o/--output`, and
+`--deterministic` (sequential, reproducible element ids).
+
+### Web demo
 
 ```bash
-curl -X POST http://localhost:8085/api/dmn \
-  -F "pmml-file=@my_decision_tree.pmml" \
-  -F "model-id=risk-assessment-v1" \
-  -F "model-name=Risk Assessment Model" \
-  -F "decision-id=calculate-risk" \
-  -F "decision-name=Calculate Credit Risk" \
-  > output.dmn
+npm run dev -w @pmml-to-dmn/web       # local dev server (http://localhost:5173)
+npm run build -w @pmml-to-dmn/web     # static site → apps/web/dist
 ```
 
-## ⚙️ How It Works
+Paste or upload a PMML file and hit **Convert** — the DMN is generated in your browser, rendered
+with dmn-js, and you can **simulate** concrete inputs (evaluated with [feelin](https://github.com/nikku/feelin))
+to see which rule fires. The `pages.yml` workflow publishes the site to GitHub Pages on every push
+to `master`.
 
-1. **Parse PMML**: Extracts decision tree structure, predicates, and leaf outcomes
-2. **Build Decision Table**: Converts tree paths into DMN rule rows
-3. **Simplify Conditions**: Optimizes numerical ranges into FEEL interval notation
-4. **Generate DMN XML**: Creates valid DMN 1.3 XML using pure DOM manipulation
+## Example
 
-### 🧠 Smart Simplifications
+Input (`examples/credit-score.pmml`) — a tree splitting on a numeric `score`:
 
-- `score >= 10 AND score < 20` → `[10..20)`
-- `category = "A" OR category = "B"` → preserved as separate rules
-- Numeric literals properly formatted for FEEL expressions
+```xml
+<Node id="2" score="PASS">
+    <SimplePredicate field="score" operator="greaterOrEqual" value="50"/>
+</Node>
+```
 
-## 🛠️ Tech Stack
+Output (`examples/credit-score.dmn`) — a DMN rule with a FEEL condition:
 
-- **Kotlin** - Because Java ceremonies are so 2015
-- **Spring Boot** - REST API with minimal fuss
-- **Pure DOM** - No external DMN libraries, just XML craftsmanship
+```xml
+<dmn:rule id="DecisionRule_7">
+  <dmn:inputEntry id="UnaryTests_5"><dmn:text>&gt;= 50</dmn:text></dmn:inputEntry>
+  <dmn:outputEntry id="LiteralExpression_6"><dmn:text>"PASS"</dmn:text></dmn:outputEntry>
+</dmn:rule>
+```
 
----
+## Project structure
 
-*Built during countless hours of thesis writing 🎓*
+```
+packages/core/   The conversion core (functional pipeline: parse → map → serialize)
+packages/cli/    Command-line interface (cac)
+apps/web/        Browser app (Vite, dmn-js viewer, feelin simulation)
+examples/        Sample PMML input and the DMN it produces
+docs/            Architecture, demo walkthrough and blog-post outline
+```
+
+See [docs/architecture.md](docs/architecture.md) for the design.
+
+## Supported scope & limitations
+
+**Supported:** a single PMML `TreeModel`, `DataDictionary`/`MiningSchema`, tree `Node`s with
+`SimplePredicate` (`equal`, `notEqual`, `lessThan`, `lessOrEqual`, `greaterThan`,
+`greaterOrEqual`), categorical and continuous inputs, one target field.
+
+**Not (yet) supported:** `CompoundPredicate`, `SimpleSetPredicate`, `True`/`False` as real
+predicates, model ensembles/segmentation, regression and scorecard models, multiple models per
+file. The architecture leaves room to add these.
+
+## Contributing
+
+Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) and the
+[Code of Conduct](CODE_OF_CONDUCT.md). Use the issue forms to report a
+[bug](.github/ISSUE_TEMPLATE/fix.yml), request a
+[feature](.github/ISSUE_TEMPLATE/feat.yml), or propose a
+[refactor](.github/ISSUE_TEMPLATE/refactor.yml).
+
+## License
+
+[MIT](LICENSE) © 2026 Marco Schaeck
