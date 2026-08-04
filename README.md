@@ -1,5 +1,6 @@
 # PMML → DMN Converter
 
+[![Live demo](https://img.shields.io/badge/Live%20demo-emaarco.github.io-2ea44f?logo=githubpages&logoColor=white)](https://emaarco.github.io/pmml-to-dmn/)
 [![CI](https://github.com/emaarco/pmml-to-dmn/actions/workflows/ci.yml/badge.svg)](https://github.com/emaarco/pmml-to-dmn/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![TypeScript](https://img.shields.io/badge/TypeScript-Node-3178C6?logo=typescript&logoColor=white)
@@ -8,8 +9,10 @@ Convert **PMML decision-tree models** into **DMN decision tables** — as a comm
 directly in your browser. The generated DMN is Camunda-compatible and can be opened, edited and
 executed in any DMN engine or visualised and simulated with [dmn-js](https://github.com/bpmn-io/dmn-js).
 
-A modern rewrite of a converter that originally came out of a master's thesis (`assets/thesis.pdf`),
-rebuilt as a clean, tested TypeScript project.
+**[Try the web app →](https://emaarco.github.io/pmml-to-dmn/)** — convert and simulate PMML entirely in your browser, no install required.
+
+A modern rewrite of a converter that originally came out of a
+[master's thesis 📄](assets/thesis.pdf), rebuilt as a clean, tested TypeScript project.
 
 ## Classic ML meets DMN
 
@@ -72,7 +75,9 @@ node packages/cli/dist/main.js --help
 Flags: `--model-id`, `--model-name`, `--decision-id`, `--decision-name`, `-o/--output`, and
 `--deterministic` (sequential, reproducible element ids).
 
-### Web demo
+### Demo
+
+Live at **[emaarco.github.io/pmml-to-dmn](https://emaarco.github.io/pmml-to-dmn/)** — or run it locally:
 
 ```bash
 npm run dev -w @pmml-to-dmn/web       # local dev server (http://localhost:5173)
@@ -111,7 +116,7 @@ packages/core/   The conversion core (functional pipeline: parse → map → ser
 packages/cli/    Command-line interface (cac)
 apps/web/        Browser app (Vite, read-only dmn-js viewer + dmn-js-simulation)
 examples/        Sample PMML input and the DMN it produces
-docs/            Architecture, demo walkthrough and blog-post outline
+docs/            Architecture notes
 ```
 
 See [docs/architecture.md](docs/architecture.md) for the design.
