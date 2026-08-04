@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dmn:definitions xmlns:dmn="https://www.omg.org/spec/DMN/20191111/MODEL/" id="credit-risk-v1" name="Credit Risk Model" namespace="http://camunda.org/schema/1.0/dmn" exporter="pmml-to-dmn">
+  <dmn:decision id="assess-risk" name="Assess Credit Risk">
+    <dmn:decisionTable id="DecisionTable_1" hitPolicy="FIRST">
+      <dmn:input id="Input_2" label="score">
+        <dmn:inputExpression id="InputExpression_3" typeRef="integer" expressionLanguage="feel">
+          <dmn:text>score</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:output id="Output_4" name="result" typeRef="string" />
+      <dmn:rule id="DecisionRule_7">
+        <dmn:inputEntry id="UnaryTests_5">
+          <dmn:text>&gt;= 50</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="LiteralExpression_6">
+          <dmn:text>"PASS"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="DecisionRule_10">
+        <dmn:inputEntry id="UnaryTests_8">
+          <dmn:text>&lt; 50</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="LiteralExpression_9">
+          <dmn:text>"FAIL"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+    </dmn:decisionTable>
+  </dmn:decision>
+</dmn:definitions>

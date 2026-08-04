@@ -1,0 +1,21 @@
+"$schema" = "https://conductor.build/schemas/settings.repo.schema.json"
+
+[scripts]
+setup = "npm install"
+run_mode = "nonconcurrent"
+
+[scripts.run.check]
+command = "npm run check"
+icon = "hammer"
+
+[scripts.run.test]
+command = "npx vitest"
+icon = "test-tube"
+
+[scripts.run.cli]
+command = "npm run build -w @pmml-to-dmn/cli && node packages/cli/dist/main.js examples/credit-score.pmml --deterministic"
+icon = "terminal"
+
+[scripts.run.web]
+command = "npm run dev -w @pmml-to-dmn/web"
+icon = "globe"

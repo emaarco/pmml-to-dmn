@@ -1,0 +1,31 @@
+{
+  "name": "pmml-to-dmn",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "vitest run",
+    "lint": "biome ci .",
+    "format": "biome check --write .",
+    "arch": "depcruise packages apps --config .dependency-cruiser.cjs",
+    "check": "npm run build && npm run lint && npm run typecheck && npm run arch && npm run test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.6",
+    "@types/node": "26.1.2",
+    "dependency-cruiser": "18.1.1",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "vite": "8.2.0",
+    "vitest": "4.1.10"
+  }
+}
