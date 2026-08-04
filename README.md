@@ -66,7 +66,10 @@ node packages/cli/dist/main.js examples/credit-score.pmml -o out.dmn
 - 🌐 **Browser app** that converts *and simulates* DMN entirely client-side (hostable on GitHub Pages)
 - 🧩 Small functional core with an enforced architecture (dependency-cruiser)
 
-### Command line
+There are two ways to use it: from the **command line** (great for scripting and CI) or via the
+**web module** in your browser (great for exploring and simulating).
+
+### Use via command line
 
 ```bash
 node packages/cli/dist/main.js --help
@@ -75,7 +78,7 @@ node packages/cli/dist/main.js --help
 Flags: `--model-id`, `--model-name`, `--decision-id`, `--decision-name`, `-o/--output`, and
 `--deterministic` (sequential, reproducible element ids).
 
-### Demo
+### Use via web module
 
 Live at **[emaarco.github.io/pmml-to-dmn](https://emaarco.github.io/pmml-to-dmn/)** — or run it locally:
 
