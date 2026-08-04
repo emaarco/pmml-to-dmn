@@ -23,9 +23,9 @@ Examples of unacceptable behaviour:
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported to the
-maintainer at **marco.schaeck@miragon.io**. All complaints will be reviewed and investigated
-promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported privately to the
+maintainers via a [GitHub security advisory](https://github.com/emaarco/pmml-to-dmn/security/advisories/new).
+All complaints will be reviewed and investigated promptly and fairly.
 
 This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org),
 version 2.1.
