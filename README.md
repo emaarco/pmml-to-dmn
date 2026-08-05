@@ -39,6 +39,21 @@ the model found, but as transparent, testable, governable decisions.
 [dmn-js-simulation](https://github.com/emaarco/dmn-js-simulation) to watch exactly how each input
 reaches its output.
 
+## Where a PMML model comes from
+
+You don't write PMML by hand — you train a model in your usual ML tool and **export** it. Most
+tools ship a PMML exporter:
+
+- **KNIME** — build a tree with *Decision Tree Learner*, then wire it into the *PMML Writer* node (no code)
+- **scikit-learn** (Python) — wrap a `DecisionTreeClassifier` in a `PMMLPipeline` and call
+  [`sklearn2pmml`](https://github.com/jpmml/sklearn2pmml)
+- **R** — the [`pmml`](https://cran.r-project.org/package=pmml) package exports an `rpart` tree
+- **Spark MLlib / SPSS / SAS** — native PMML export
+
+This converter expects a **`TreeModel`** (see [scope](#supported-scope--limitations)), so train a
+*decision tree* rather than a random forest or regression. `examples/credit-score.pmml` is a ready
+sample to try first.
+
 ## Install / quickstart
 
 Requires **Node.js 20+** (npm ships with Node).
