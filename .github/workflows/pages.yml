@@ -1,9 +1,8 @@
 name: Deploy web demo to GitHub Pages
 
 on:
-  push:
-    branches:
-      - master
+  release:
+    types: [published]
   workflow_dispatch:
 
 permissions:

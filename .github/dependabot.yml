@@ -1,6 +1,6 @@
 version: 2
 updates:
-  # npm: everything (patch, minor, major) in one weekly PR — CI is the gate.
+  # npm: patch+minor in one weekly PR (auto-merges via CI gate); majors separate for manual review.
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -15,10 +15,14 @@ updates:
       default-days: 7
     open-pull-requests-limit: 5
     groups:
-      npm-all:
+      npm-patch-minor:
         applies-to: version-updates
         patterns: ["*"]
-        update-types: ["patch", "minor", "major"]
+        update-types: ["patch", "minor"]
+      npm-major:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["major"]
       npm-security:
         applies-to: security-updates
         patterns: ["*"]
