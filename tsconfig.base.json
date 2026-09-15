@@ -9,6 +9,8 @@
     "noImplicitOverride": true,
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
+    "ignoreDeprecations": "6.0",
+    "types": ["node"],
     "resolveJsonModule": true,
     "declaration": true,
     "sourceMap": true,
