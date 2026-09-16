@@ -90,8 +90,10 @@ There are two ways to use it: from the **command line** (great for scripting and
 node packages/cli/dist/main.js --help
 ```
 
-Flags: `--model-id`, `--model-name`, `--decision-id`, `--decision-name`, `-o/--output`, and
-`--deterministic` (sequential, reproducible element ids).
+Flags: `--model-id`, `--model-name`, `--decision-id`, `--decision-name`, `-o/--output`,
+`--hit-policy` (`UNIQUE`, `FIRST` or `ANY`; defaults to `FIRST`; `UNIQUE` is the DMN default and is
+left implicit in the XML), and `--deterministic`
+(sequential, reproducible element ids).
 
 ### Use via web module
 
@@ -143,7 +145,11 @@ See [docs/architecture.md](docs/architecture.md) for the design.
 
 **Supported:** a single PMML `TreeModel`, `DataDictionary`/`MiningSchema`, tree `Node`s with
 `SimplePredicate` (`equal`, `notEqual`, `lessThan`, `lessOrEqual`, `greaterThan`,
-`greaterOrEqual`), categorical and continuous inputs, one target field.
+`greaterOrEqual`), categorical and continuous inputs, one target field. The decision table's hit
+policy is configurable among the single-hit policies `UNIQUE`, `FIRST` and `ANY`: a decision tree
+matches exactly one leaf per input, so multi-hit policies (`COLLECT`, `RULE ORDER`, `OUTPUT ORDER`)
+would only wrap that single result in a list, and `PRIORITY` needs output values the converter does
+not generate.
 
 **Not (yet) supported:** `CompoundPredicate`, `SimpleSetPredicate`, `True`/`False` as real
 predicates, model ensembles/segmentation, regression and scorecard models, multiple models per

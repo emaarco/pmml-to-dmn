@@ -247,6 +247,22 @@ button.link-btn:hover {
 .dropzone-hint {
   font-size: 0.9rem;
 }
+.hit-policy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 0.9rem;
+}
+.hit-policy select {
+  font: inherit;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+}
 .error {
   color: var(--error);
   margin: 12px 0 0;

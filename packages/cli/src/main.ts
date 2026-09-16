@@ -1,4 +1,5 @@
 import { writeFileSync } from 'node:fs';
+import { parseHitPolicy } from '@pmml-to-dmn/core';
 import { cac } from 'cac';
 import { convertFile } from './convert-file';
 
@@ -12,6 +13,9 @@ async function main(): Promise<void> {
     .option('--model-name <name>', 'name of the generated DMN model', { default: 'PMML to DMN' })
     .option('--decision-id <id>', 'id of the generated decision', { default: 'decision' })
     .option('--decision-name <name>', 'name of the generated decision', { default: 'Decision' })
+    .option('--hit-policy <policy>', 'hit policy of the decision table (UNIQUE, FIRST, ANY)', {
+      default: 'FIRST',
+    })
     .option('--deterministic', 'use sequential (reproducible) element ids')
     .action(async (input: string, options: Record<string, unknown>) => {
       const xml = await convertFile(input, {
@@ -19,6 +23,7 @@ async function main(): Promise<void> {
         modelName: String(options.modelName),
         decisionId: String(options.decisionId),
         decisionName: String(options.decisionName),
+        hitPolicy: parseHitPolicy(String(options.hitPolicy)),
         deterministic: Boolean(options.deterministic),
       });
 

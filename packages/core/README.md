@@ -23,7 +23,13 @@ PMML XML → parse → PmmlModel → map → DmnModel → serialize → DMN XML
 ```ts
 import { convert } from '@pmml-to-dmn/core'
 
-const dmnXml = await convert(pmmlXml) // async: serialization is async
+const dmnXml = await convert(pmmlXml, {
+  modelId: 'credit-risk-v1',
+  modelName: 'Credit Risk Model',
+  decisionId: 'assess-risk',
+  decisionName: 'Assess Credit Risk',
+  hitPolicy: 'UNIQUE', // optional: UNIQUE | FIRST | ANY, defaults to FIRST
+}) // async: serialization is async
 ```
 
 ## Notes

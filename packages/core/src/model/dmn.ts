@@ -11,8 +11,13 @@ export interface Decision {
   readonly table: DecisionTable;
 }
 
+export type HitPolicy = 'UNIQUE' | 'FIRST' | 'ANY';
+
+export const HIT_POLICIES: readonly HitPolicy[] = ['UNIQUE', 'FIRST', 'ANY'];
+
 export interface DecisionTable {
   readonly id: string;
+  readonly hitPolicy: HitPolicy;
   readonly inputs: readonly InputColumn[];
   readonly output: OutputColumn;
   readonly rules: readonly DmnRule[];

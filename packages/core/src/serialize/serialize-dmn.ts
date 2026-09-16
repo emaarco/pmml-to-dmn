@@ -47,7 +47,7 @@ export async function serializeDmn(model: DmnModel): Promise<string> {
 
   const decisionTable = create('dmn:DecisionTable', {
     id: table.id,
-    hitPolicy: 'FIRST',
+    hitPolicy: table.hitPolicy,
     input: inputs,
     output: [output],
     rule: rules,
