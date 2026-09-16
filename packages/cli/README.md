@@ -16,8 +16,10 @@ node packages/cli/dist/main.js examples/credit-score.pmml -o out.dmn
 node packages/cli/dist/main.js --help
 ```
 
-Flags: `--model-id`, `--model-name`, `--decision-id`, `--decision-name`, `-o/--output`, and
-`--deterministic` (sequential, reproducible element ids — handy for golden tests and clean diffs).
+Flags: `--model-id`, `--model-name`, `--decision-id`, `--decision-name`, `-o/--output`,
+`--hit-policy` (`UNIQUE`, `FIRST` or `ANY`; defaults to `FIRST`; `UNIQUE` is the DMN default and is
+left implicit in the XML), and `--deterministic`
+(sequential, reproducible element ids — handy for golden tests and clean diffs).
 
 The published binary is exposed as `pmml2dmn`.
 

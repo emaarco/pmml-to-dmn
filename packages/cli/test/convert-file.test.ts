@@ -15,6 +15,17 @@ describe('convertFile', () => {
     expect(dmn).toContain('<dmn:text>"PASS"</dmn:text>');
   });
 
+  it('passes the hit policy through', async () => {
+    const dmn = await convertFile('examples/credit-score.pmml', {
+      modelId: 'm1',
+      modelName: 'Model',
+      decisionId: 'd1',
+      decisionName: 'Decision',
+      hitPolicy: 'ANY',
+    });
+    expect(dmn).toContain('hitPolicy="ANY"');
+  });
+
   it('rejects on a missing file', async () => {
     await expect(
       convertFile('does-not-exist.pmml', {

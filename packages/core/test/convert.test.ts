@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { convert, sequentialIdGenerator } from '../src/index';
+import { convert, DmnMappingError, parseHitPolicy, sequentialIdGenerator } from '../src/index';
 
 const CREDIT_SCORE_PMML = readFileSync('examples/credit-score.pmml', 'utf8');
 const CREDIT_SCORE_DMN = readFileSync('examples/credit-score.dmn', 'utf8');
@@ -38,5 +38,33 @@ describe('convert (end-to-end)', () => {
       deterministicConvert(CREDIT_SCORE_PMML),
     ]);
     expect(first).toBe(second);
+  });
+});
+
+describe('hit policy', () => {
+  it('defaults to FIRST', async () => {
+    expect(await deterministicConvert(CREDIT_SCORE_PMML)).toContain('hitPolicy="FIRST"');
+  });
+
+  it('applies the configured hit policy', async () => {
+    const dmn = await convert(CREDIT_SCORE_PMML, { ...command, hitPolicy: 'ANY' });
+    expect(dmn).toContain('hitPolicy="ANY"');
+  });
+
+  it('omits the attribute for UNIQUE, the DMN default', async () => {
+    const dmn = await convert(CREDIT_SCORE_PMML, { ...command, hitPolicy: 'UNIQUE' });
+    expect(dmn).toMatch(/<dmn:decisionTable id="[^"]+">/);
+    expect(dmn).not.toContain('hitPolicy=');
+  });
+
+  it('parses a supported hit policy', () => {
+    expect(parseHitPolicy('ANY')).toBe('ANY');
+  });
+
+  it('rejects an unsupported hit policy with the allowed values', () => {
+    expect(() => parseHitPolicy('COLLECT')).toThrow(DmnMappingError);
+    expect(() => parseHitPolicy('COLLECT')).toThrow(
+      "Unsupported hit policy 'COLLECT'. Use one of: UNIQUE, FIRST, ANY",
+    );
   });
 });

@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { convert, sequentialIdGenerator } from '@pmml-to-dmn/core';
+import { convert, type HitPolicy, sequentialIdGenerator } from '@pmml-to-dmn/core';
 
 export interface ConvertFileOptions {
   readonly modelId: string;
@@ -7,6 +7,7 @@ export interface ConvertFileOptions {
   readonly decisionId: string;
   readonly decisionName: string;
   readonly deterministic?: boolean;
+  readonly hitPolicy?: HitPolicy;
 }
 
 /** Read a PMML file and convert it to a DMN XML string. */
@@ -17,6 +18,7 @@ export async function convertFile(inputPath: string, options: ConvertFileOptions
     modelName: options.modelName,
     decisionId: options.decisionId,
     decisionName: options.decisionName,
+    hitPolicy: options.hitPolicy,
     idGenerator: options.deterministic ? sequentialIdGenerator() : undefined,
   });
 }

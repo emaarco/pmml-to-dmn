@@ -1,5 +1,11 @@
 import type { IdGenerator } from '../id';
-import type { DmnModel, DmnRule, InputColumn } from '../model/dmn';
+import {
+  type DmnModel,
+  type DmnRule,
+  HIT_POLICIES,
+  type HitPolicy,
+  type InputColumn,
+} from '../model/dmn';
 import { DmnMappingError } from '../model/errors';
 import type { DataField, PmmlModel, PmmlNode, SimplePredicate } from '../model/pmml';
 import { categoricalCondition, emptyCondition, numericalCondition } from './conditions';
@@ -10,6 +16,19 @@ export interface DmnMetadata {
   readonly modelName: string;
   readonly decisionId: string;
   readonly decisionName: string;
+  /** Hit policy of the generated decision table; defaults to FIRST. */
+  readonly hitPolicy?: HitPolicy;
+}
+
+/** Turns an untrusted string (CLI flag, form value) into a supported [HitPolicy]. */
+export function parseHitPolicy(value: string): HitPolicy {
+  const match = HIT_POLICIES.find((policy) => policy === value);
+  if (!match) {
+    throw new DmnMappingError(
+      `Unsupported hit policy '${value}'. Use one of: ${HIT_POLICIES.join(', ')}`,
+    );
+  }
+  return match;
 }
 
 /** Pure transform: PMML decision tree -> DMN model. Ids come from the injected [nextId]. */
@@ -38,7 +57,7 @@ export function mapToDmn(model: PmmlModel, meta: DmnMetadata, nextId: IdGenerato
     decision: {
       id: meta.decisionId,
       name: meta.decisionName,
-      table: { id: tableId, inputs, output, rules },
+      table: { id: tableId, hitPolicy: meta.hitPolicy ?? 'FIRST', inputs, output, rules },
     },
   };
 }

@@ -1,5 +1,5 @@
 import DmnSimulationModule from '@emaarco/dmn-js-simulation';
-import { convertDetailed, type DmnModel } from '@pmml-to-dmn/core';
+import { convertDetailed, type DmnModel, HIT_POLICIES, parseHitPolicy } from '@pmml-to-dmn/core';
 import DmnViewer from 'dmn-js/lib/Viewer';
 import { SAMPLE_PMML } from './sample';
 
@@ -100,6 +100,20 @@ function renderApp(): void {
     if (file) void loadFile(file);
   });
 
+  const hitPolicySelect = h(
+    'select',
+    { id: 'hit-policy' },
+    ...HIT_POLICIES.map((policy) =>
+      h('option', policy === 'FIRST' ? { value: policy, selected: '' } : { value: policy }, policy),
+    ),
+  );
+  const hitPolicyRow = h(
+    'label',
+    { class: 'hit-policy' },
+    'Hit policy of the decision table',
+    hitPolicySelect,
+  );
+
   const exampleBtn = h('button', { type: 'button', class: 'link-btn' }, 'try the example model');
   exampleBtn.onclick = () => void convertAndOpen(SAMPLE_PMML, 'credit-score.pmml');
 
@@ -155,6 +169,7 @@ function renderApp(): void {
             ),
             fileInput,
             dropzone,
+            hitPolicyRow,
             h('p', { class: 'error', id: 'upload-error' }),
             h('div', { class: 'or' }, 'or ', exampleBtn),
           ),
@@ -275,6 +290,7 @@ async function convertAndOpen(pmml: string, sourceName: string): Promise<void> {
       modelName: currentName,
       decisionId: 'decision',
       decisionName: 'Decision',
+      hitPolicy: parseHitPolicy((byId('hit-policy') as HTMLSelectElement).value),
     });
     currentXml = xml;
     currentModel = model;
