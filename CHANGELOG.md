@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/emaarco/pmml-to-dmn/compare/v0.2.0...v0.3.0) (2026-09-16)
+
+
+### Features
+
+* allow configuring the hit policy of generated decision tables ([#46](https://github.com/emaarco/pmml-to-dmn/issues/46)) ([d29a072](https://github.com/emaarco/pmml-to-dmn/commit/d29a07242780ee933cc85757d527db5a2e626a7d))
+
 ## [0.2.0](https://github.com/emaarco/pmml-to-dmn/compare/v0.1.0...v0.2.0) (2026-08-20)
 
 
