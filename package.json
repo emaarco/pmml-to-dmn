@@ -20,12 +20,12 @@
     "check": "npm run build && npm run lint && npm run typecheck && npm run arch && npm run test"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.12",
-    "@types/node": "26.5.0",
-    "dependency-cruiser": "18.2.0",
+    "@biomejs/biome": "2.5.13",
+    "@types/node": "26.5.1",
+    "dependency-cruiser": "18.3.1",
     "tsup": "8.5.1",
     "typescript": "6.0.3",
-    "vite": "8.2.2",
+    "vite": "8.3.0",
     "vitest": "5.0.0"
   }
 }
