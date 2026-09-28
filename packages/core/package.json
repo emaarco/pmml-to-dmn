@@ -20,7 +20,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "dmn-moddle": "12.1.0",
+    "dmn-moddle": "12.2.1",
     "fast-xml-parser": "5.11.1"
   }
 }
