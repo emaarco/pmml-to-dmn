@@ -11,6 +11,8 @@ executed in any DMN engine or visualised and simulated with [dmn-js](https://git
 
 **[Try the web app →](https://emaarco.github.io/pmml-to-dmn/)** — convert and simulate PMML entirely in your browser, no install required.
 
+![The example credit-score PMML model is converted into a DMN decision table, then simulated: score 72 hits rule 1 (PASS), score 38 hits rule 2 (FAIL)](docs/assets/demo.gif)
+
 A modern rewrite of a converter that originally came out of a
 [master's thesis 📄](assets/thesis.pdf), rebuilt as a clean, tested TypeScript project.
 
