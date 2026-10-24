@@ -1,9 +1,7 @@
-export { type ConversionResult, type ConvertOptions, convert, convertDetailed } from './convert';
-export { type IdGenerator, sequentialIdGenerator, uuidIdGenerator } from './id';
-export { type DmnMetadata, parseHitPolicy } from './map/map-to-dmn';
 export type {
   Decision,
   DecisionTable,
+  DmnMetadata,
   DmnModel,
   DmnRule,
   HitPolicy,
@@ -20,3 +18,9 @@ export {
   UnsupportedPmmlFeatureError,
 } from './model/errors';
 export type { ComparisonOperator, DataField, PmmlModel, PmmlNode, Predicate } from './model/pmml';
+export {
+  type ConversionResult,
+  type ConverterOptions,
+  PmmlToDmnConverter,
+} from './PmmlToDmnConverter';
+export { parseHitPolicy } from './utils/parseHitPolicy';

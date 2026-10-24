@@ -9,7 +9,11 @@ fires. No server, no install. Built with [Vite](https://vitejs.dev) around
 
 ## Layout
 
-- `src/main.ts` — app entry: upload handling, calls `core.convert()`, wires up the viewer/simulation.
+- `src/main.ts` — entry: loads the styles and mounts `PmmlToDmnApp`.
+- `src/PmmlToDmnApp.ts` — orchestrates the two steps and calls `PmmlToDmnConverter`.
+- `src/components/` — `Stepper`, `UploadStep`, `SimulationStep`, `DecisionTableViewer` (dmn-js +
+  simulation), `Footer`.
+- `src/utils/` — small DOM/format helpers, one function per file.
 - `src/sample.ts` — bundled sample PMML for a one-click demo.
 - `src/styles.css` — styling (Geist variable font).
 - `index.html` · `vite.config.ts` — Vite host page and build config.

@@ -24,12 +24,14 @@ docs/            architecture.md
 
 ## Core layout (`packages/core/src`, functional core)
 
+- `PmmlToDmnConverter.ts` — the public entry: `new PmmlToDmnConverter({ deterministicIds }).convert(pmml, metadata)`
+  → `{ xml, model }`. Composes the stages below. `index.ts` = public API.
 - `model/` — pure types (`pmml.ts`, `dmn.ts`, `errors.ts`). Leaf; no libs/I/O.
-- `parse/parse-pmml.ts` — PMML → `PmmlModel` (fast-xml-parser).
-- `map/map-to-dmn.ts` + `map/conditions.ts` — `PmmlModel` → `DmnModel` (pure; interval simplification).
-- `serialize/serialize-dmn.ts` — `DmnModel` → DMN XML (dmn-moddle, async).
-- `id.ts` — `IdGenerator` (`sequentialIdGenerator` deterministic, `uuidIdGenerator` default).
-- `convert.ts` — `convert()` / `convertDetailed()` compose the pipeline. `index.ts` = public API.
+- `parse/PmmlParser.ts` — PMML → `PmmlModel` (fast-xml-parser).
+- `map/DmnMapper.ts` + `map/FeelConditionBuilder.ts` — `PmmlModel` → `DmnModel` (pure; interval simplification).
+- `serialize/DmnSerializer.ts` — `DmnModel` → DMN XML (dmn-moddle, async).
+- `ids/` — `IdGenerator` seam: `SequentialIdGenerator` (deterministic), `RandomIdGenerator` (default).
+- `utils/` — pure helpers, one function per file (`parseHitPolicy`).
 
 ## Commands
 
@@ -46,13 +48,17 @@ npm run build -w @pmml-to-dmn/web   # static site → apps/web/dist
 
 ## Conventions & gotchas
 
+- **Classes first.** Behaviour lives in classes (one per file, file named after the class). Pure
+  helpers go to a `utils/` folder, one function per file named after it. `test/code-structure.test.ts`
+  fails on top-level functions anywhere else. Shells follow the same rule (`PmmlToDmnCli`,
+  `PmmlToDmnApp` + `components/`).
 - **Architecture safety is enforced, not manual.** `npm run arch` fails if the pure `map/` stage imports
-  any vendor/Node module, if pipeline stages import each other, if `model/` is not a leaf, or if a
-  shell imports core internals. Keep new code inside these boundaries.
-- **Determinism matters.** Output must be reproducible; tests use `sequentialIdGenerator()` and a
+  any vendor/Node module, if pipeline stages import each other, if `model/`, `ids/` or `utils/` are not leaves, or
+  if a shell imports core internals. Keep new code inside these boundaries.
+- **Determinism matters.** Output must be reproducible; tests use `deterministicIds: true` and a
   golden file (`examples/credit-score.dmn`). Regenerate the golden if output intentionally changes.
 - FEEL numbers render naturally (`>= 50`, not `50.0`).
-- dmn-moddle serialization is **async** → `convert()` is async.
+- dmn-moddle serialization is **async** → `PmmlToDmnConverter.convert()` is async.
 - Versions are exact-pinned (`save-exact`); run `npm install` after changing deps.
 - CI: `.github/workflows/ci.yml` runs `npm run check`; `pages.yml` builds `apps/web` and deploys to Pages.
   Pushing workflow files needs a token with the `workflow` OAuth scope.

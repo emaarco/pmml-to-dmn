@@ -40,8 +40,8 @@ npm run dev -w @pmml-to-dmn/web   # web dev server
 1. `npm run check` passes locally.
 2. **Add tests** for new behaviour. Conversion logic is covered by unit + golden tests in
    `packages/core/test`.
-3. **Keep output deterministic.** Generated DMN must stay reproducible; pass
-   `sequentialIdGenerator()` in tests and update the golden (`examples/credit-score.dmn`) if output
+3. **Keep output deterministic.** Generated DMN must stay reproducible; use
+   `new PmmlToDmnConverter({ deterministicIds: true })` in tests and update the golden (`examples/credit-score.dmn`) if output
    intentionally changes.
 4. Use **conventional commit** messages (e.g. `feat: support compound predicates`).
 
@@ -50,8 +50,11 @@ npm run dev -w @pmml-to-dmn/web   # web dev server
 Most extensions touch three files in `packages/core/src`:
 
 - the domain types in `model/`,
-- the parser in `parse/parse-pmml.ts`,
-- the mapping in `map/map-to-dmn.ts` (and `map/conditions.ts`).
+- the parser in `parse/PmmlParser.ts`,
+- the mapping in `map/DmnMapper.ts` (and `map/FeelConditionBuilder.ts`).
+
+Write behaviour as classes; pure helpers go to a `utils/` folder (one function per file, named
+after it). `test/code-structure.test.ts` rejects top-level functions anywhere else.
 
 Please add a representative example under `examples/`.
 
