@@ -1,4 +1,3 @@
-/** DOM-free representation of the DMN model that gets serialized to XML. */
 export interface DmnModel {
   readonly id: string;
   readonly name: string;
@@ -11,9 +10,9 @@ export interface Decision {
   readonly table: DecisionTable;
 }
 
-export type HitPolicy = 'UNIQUE' | 'FIRST' | 'ANY';
+export const HIT_POLICIES = ['UNIQUE', 'FIRST', 'ANY'] as const;
 
-export const HIT_POLICIES: readonly HitPolicy[] = ['UNIQUE', 'FIRST', 'ANY'];
+export type HitPolicy = (typeof HIT_POLICIES)[number];
 
 export interface DecisionTable {
   readonly id: string;
@@ -51,4 +50,12 @@ export interface InputEntry {
 export interface OutputEntry {
   readonly id: string;
   readonly text: string;
+}
+
+export interface DmnMetadata {
+  readonly modelId: string;
+  readonly modelName: string;
+  readonly decisionId: string;
+  readonly decisionName: string;
+  readonly hitPolicy?: HitPolicy;
 }

@@ -1,22 +1,24 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { convert, DmnMappingError, parseHitPolicy, sequentialIdGenerator } from '../src/index';
+import { DmnMappingError, type HitPolicy, PmmlToDmnConverter, parseHitPolicy } from '../src/index';
 
 const CREDIT_SCORE_PMML = readFileSync('examples/credit-score.pmml', 'utf8');
 const CREDIT_SCORE_DMN = readFileSync('examples/credit-score.dmn', 'utf8');
 
-const command = {
+const metadata = {
   modelId: 'credit-risk-v1',
   modelName: 'Credit Risk Model',
   decisionId: 'assess-risk',
   decisionName: 'Assess Credit Risk',
 };
 
-function deterministicConvert(pmml: string): Promise<string> {
-  return convert(pmml, { ...command, idGenerator: sequentialIdGenerator() });
+const deterministic = new PmmlToDmnConverter({ deterministicIds: true });
+
+async function deterministicConvert(pmml: string, hitPolicy?: HitPolicy): Promise<string> {
+  return (await deterministic.convert(pmml, { ...metadata, hitPolicy })).xml;
 }
 
-describe('convert (end-to-end)', () => {
+describe('PmmlToDmnConverter', () => {
   it('converts the credit-score tree into the expected DMN', async () => {
     const dmn = await deterministicConvert(CREDIT_SCORE_PMML);
     expect(dmn).toContain('id="credit-risk-v1"');
@@ -32,7 +34,23 @@ describe('convert (end-to-end)', () => {
     expect(await deterministicConvert(CREDIT_SCORE_PMML)).toBe(CREDIT_SCORE_DMN);
   });
 
-  it('produces byte-identical output across runs', async () => {
+  it('restarts the deterministic ids for every conversion', async () => {
+    const first = await deterministicConvert(CREDIT_SCORE_PMML);
+    const second = await deterministicConvert(CREDIT_SCORE_PMML);
+    expect(second).toBe(first);
+  });
+
+  it('returns the structured model next to the XML', async () => {
+    const { model } = await deterministic.convert(CREDIT_SCORE_PMML, metadata);
+    expect(model.decision.table.rules).toHaveLength(2);
+  });
+
+  it('generates random ids by default', async () => {
+    const { xml } = await new PmmlToDmnConverter().convert(CREDIT_SCORE_PMML, metadata);
+    expect(xml).toMatch(/id="DecisionTable_[0-9a-f]{32}"/);
+  });
+
+  it('produces byte-identical output across concurrent runs', async () => {
     const [first, second] = await Promise.all([
       deterministicConvert(CREDIT_SCORE_PMML),
       deterministicConvert(CREDIT_SCORE_PMML),
@@ -47,12 +65,12 @@ describe('hit policy', () => {
   });
 
   it('applies the configured hit policy', async () => {
-    const dmn = await convert(CREDIT_SCORE_PMML, { ...command, hitPolicy: 'ANY' });
+    const dmn = await deterministicConvert(CREDIT_SCORE_PMML, 'ANY');
     expect(dmn).toContain('hitPolicy="ANY"');
   });
 
   it('omits the attribute for UNIQUE, the DMN default', async () => {
-    const dmn = await convert(CREDIT_SCORE_PMML, { ...command, hitPolicy: 'UNIQUE' });
+    const dmn = await deterministicConvert(CREDIT_SCORE_PMML, 'UNIQUE');
     expect(dmn).toMatch(/<dmn:decisionTable id="[^"]+">/);
     expect(dmn).not.toContain('hitPolicy=');
   });

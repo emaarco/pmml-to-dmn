@@ -5,8 +5,9 @@ converting PMML files to DMN from a terminal or CI. Built with [cac](https://git
 
 ## Layout
 
-- `src/main.ts` — CLI entry point: argument/flag parsing, reads input, writes output.
-- `src/convert-file.ts` — thin glue between the file system and the pure `core` pipeline.
+- `src/main.ts` — entry point: runs the CLI and sets the exit code.
+- `src/PmmlToDmnCli.ts` — flag parsing, reads the PMML file, converts via `core`, writes the DMN to
+  a file or stdout, reports errors on stderr.
 
 ## Usage
 
