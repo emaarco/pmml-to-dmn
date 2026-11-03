@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@emaarco/dmn-js-simulation": "0.3.2",
+    "@emaarco/dmn-js-simulation": "0.4.0",
     "@fontsource-variable/geist": "5.3.0",
     "@pmml-to-dmn/core": "*",
     "dmn-js": "18.0.1"
