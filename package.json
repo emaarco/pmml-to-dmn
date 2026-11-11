@@ -20,7 +20,7 @@
     "check": "npm run build && npm run lint && npm run typecheck && npm run arch && npm run test"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.6.4",
+    "@biomejs/biome": "2.5.15",
     "@types/node": "26.6.6",
     "dependency-cruiser": "18.7.1",
     "tsup": "9.0.0",
