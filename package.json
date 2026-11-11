@@ -21,11 +21,11 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
-    "@types/node": "26.6.5",
-    "dependency-cruiser": "18.7.0",
+    "@types/node": "26.6.6",
+    "dependency-cruiser": "18.7.1",
     "tsup": "9.0.0",
     "typescript": "6.0.3",
     "vite": "8.3.5",
-    "vitest": "5.0.5"
+    "vitest": "5.1.0"
   }
 }
