@@ -20,14 +20,14 @@ A modern rewrite of a converter that originally came out of a
 
 PMML (Predictive Model Markup Language) is the interchange format for **classic, pre-deep-learning
 machine learning** — decision trees, regressions, scorecards. A model learned from data is accurate,
-but it ships as an opaque artifact you can only *run*: hard to read, audit or adjust by hand.
+but it ships as an opaque artifact you can only _run_: hard to read, audit or adjust by hand.
 
 DMN is the opposite — **decision logic that people author and own**: explicit rules you can read,
 version, govern and execute in a process engine. The trade-off is that you have to write those rules
 yourself.
 
-Converting a PMML decision tree into a DMN table bridges the two: the model *learns* the logic, DMN
-makes it *explicit*. It turns the usual "AI vs. rules" framing into **AI → rules** — keep the pattern
+Converting a PMML decision tree into a DMN table bridges the two: the model _learns_ the logic, DMN
+makes it _explicit_. It turns the usual "AI vs. rules" framing into **AI → rules** — keep the pattern
 the model found, but as transparent, testable, governable decisions.
 
 |           | Classic ML (PMML)                 | DMN                                    |
@@ -46,14 +46,14 @@ reaches its output.
 You don't write PMML by hand — you train a model in your usual ML tool and **export** it. Most
 tools ship a PMML exporter:
 
-- **KNIME** — build a tree with *Decision Tree Learner*, then wire it into the *PMML Writer* node (no code)
+- **KNIME** — build a tree with _Decision Tree Learner_, then wire it into the _PMML Writer_ node (no code)
 - **scikit-learn** (Python) — wrap a `DecisionTreeClassifier` in a `PMMLPipeline` and call
   [`sklearn2pmml`](https://github.com/jpmml/sklearn2pmml)
 - **R** — the [`pmml`](https://cran.r-project.org/package=pmml) package exports an `rpart` tree
 - **Spark MLlib / SPSS / SAS** — native PMML export
 
 This converter expects a **`TreeModel`** (see [scope](#supported-scope--limitations)), so train a
-*decision tree* rather than a random forest or regression. `examples/credit-score.pmml` is a ready
+_decision tree_ rather than a random forest or regression. `examples/credit-score.pmml` is a ready
 sample to try first.
 
 ## Install / quickstart
@@ -80,7 +80,7 @@ node packages/cli/dist/main.js examples/credit-score.pmml -o out.dmn
 - 🔤 Handles categorical and continuous inputs and a single target
 - ♻️ Deterministic output — clean diffs, reviews and golden tests
 - 🖥️ **CLI** for scripting and CI
-- 🌐 **Browser app** that converts *and simulates* DMN entirely client-side (hostable on GitHub Pages)
+- 🌐 **Browser app** that converts _and simulates_ DMN entirely client-side (hostable on GitHub Pages)
 - 🧩 Small functional core with an enforced architecture (dependency-cruiser)
 
 There are two ways to use it: from the **command line** (great for scripting and CI) or via the

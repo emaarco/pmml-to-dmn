@@ -7,11 +7,11 @@ than ports/adapters for a single-capability converter, and idiomatic for the bpm
 
 ## Workspaces
 
-| Workspace         | Kind             | Responsibility                                            |
-|-------------------|------------------|-----------------------------------------------------------|
-| `packages/core`   | functional core  | The whole conversion (pure), plus the XML adapters        |
-| `packages/cli`    | imperative shell | Command-line interface (cac): reads/writes files          |
-| `apps/web`        | imperative shell | Browser app (Vite): DOM, dmn-js viewer, feelin simulation |
+| Workspace       | Kind             | Responsibility                                            |
+| --------------- | ---------------- | --------------------------------------------------------- |
+| `packages/core` | functional core  | The whole conversion (pure), plus the XML adapters        |
+| `packages/cli`  | imperative shell | Command-line interface (cac): reads/writes files          |
+| `apps/web`      | imperative shell | Browser app (Vite): DOM, dmn-js viewer, feelin simulation |
 
 The shells depend only on the core's **public API** (`@pmml-to-dmn/core`), never on its internals.
 

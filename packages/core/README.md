@@ -22,16 +22,16 @@ PMML XML → parse → PmmlModel → map → DmnModel → serialize → DMN XML
 ## Usage
 
 ```ts
-import { PmmlToDmnConverter } from '@pmml-to-dmn/core'
+import { PmmlToDmnConverter } from '@pmml-to-dmn/core';
 
-const converter = new PmmlToDmnConverter() // { deterministicIds: true } for reproducible ids
+const converter = new PmmlToDmnConverter(); // { deterministicIds: true } for reproducible ids
 const { xml, model } = await converter.convert(pmmlXml, {
   modelId: 'credit-risk-v1',
   modelName: 'Credit Risk Model',
   decisionId: 'assess-risk',
   decisionName: 'Assess Credit Risk',
   hitPolicy: 'UNIQUE', // optional: UNIQUE | FIRST | ANY, defaults to FIRST
-}) // async: serialization is async; model is the structured DmnModel
+}); // async: serialization is async; model is the structured DmnModel
 ```
 
 ## Notes

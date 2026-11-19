@@ -1,6 +1,6 @@
 # @pmml-to-dmn/web
 
-The **browser app** — an imperative shell that converts *and simulates* PMML entirely client-side.
+The **browser app** — an imperative shell that converts _and simulates_ PMML entirely client-side.
 Upload a PMML file, get a DMN table rendered read-only, then run concrete inputs to see which rule
 fires. No server, no install. Built with [Vite](https://vitejs.dev) around
 [@pmml-to-dmn/core](../../packages/core).
